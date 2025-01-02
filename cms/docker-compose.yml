@@ -10,6 +10,8 @@ services:
       - backend
       - frontend
       - database
+    networks:
+      - cms_network
 
   backend: # LaravelのバックエンドAPIサーバ
     container_name: cms_backend
@@ -29,6 +31,8 @@ services:
       - DB_PASSWORD=${MYSQL_PASSWORD}
     depends_on:
       - database
+    networks:
+      - cms_network
 
   frontend: # Reactを利用したフロントエンドアプリケーション
     build:
@@ -38,6 +42,8 @@ services:
       - ./frontend:/app # フロントエンドのソースコードをコンテナ内にマウント
       - node_modules:/app/node_modules  # コンテナのnode_modulesをローカルに同期させない
     command: ["npm", "run", "dev", "--", "--host"] # ローカル開発用の起動コマンド
+    networks:
+      - cms_network
 
   database: # MySQLデータベース
     image: mysql:8.0
@@ -53,8 +59,14 @@ services:
       - ./database/my.cnf:/etc/mysql/my.cnf # MySQLの設定ファイルをマウント
     ports:
       - "3308:3306"
+    networks:
+      - cms_network
 
 volumes:
   mysql_data: # MySQLの永続化データ用ボリューム
     name: mysql
   node_modules: # フロントエンド用のNode.jsモジュールを保存するボリューム
+
+networks:
+  cms_network:
+    driver: bridge
