@@ -9,3 +9,5 @@ chmod -R 777 storage bootstrap/cache
 メモ
 laravel11はapi.phpがないため手動で作成する必要がある
 php artisan install:api
+
+/.envと/backend/src/.envはgitに含まれないので手動でコピー
