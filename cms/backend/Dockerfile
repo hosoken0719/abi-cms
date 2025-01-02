@@ -20,18 +20,4 @@ RUN a2enmod rewrite && \
     a2dissite 000-default.conf && \
     service apache2 restart
 
-
-# 作業ディレクトリを設定
-WORKDIR /var/www/html
-
-# Laravelのコードをコピー
-# COPY ./src /var/www/html
-
-# # Laravelのセットアップ
-# RUN composer install --no-dev --optimize-autoloader \
-#     && chmod -R 777 storage bootstrap/cache 
-#     && cp .env.example .env \
-#     && php artisan key:generate
-
-EXPOSE 80
 CMD ["apache2-foreground"]
