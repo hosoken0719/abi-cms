@@ -12,6 +12,7 @@ services:
       - backend
       - frontend
       - database
+      - website
     networks:
       - cms_network
 
@@ -43,6 +44,7 @@ services:
     container_name: cms_frontend
     environment:
       TZ: Asia/Tokyo # タイムゾーンを日本時間に設定
+      API_URL: http://cms_backend # CMSのAPIエンドポイント
     volumes:
       - ./frontend:/app # フロントエンドのソースコードをコンテナ内にマウント
       - node_modules:/app/node_modules # コンテナのnode_modulesをローカルに同期させない
@@ -65,6 +67,21 @@ services:
       - ./database/my.cnf:/etc/mysql/my.cnf # MySQLの設定ファイルをマウント
     ports:
       - "3308:3306"
+    networks:
+      - cms_network
+
+  website: # Next.jsを利用したフロントエンド
+    build:
+      context: ./website # Dockerfileが存在するディレクトリ
+    container_name: website
+    environment:
+      TZ: Asia/Tokyo # タイムゾーンを日本時間に設定
+      API_URL: http://cms_backend # CMSのAPIエンドポイント
+    volumes:
+      - ./website:/app # Next.jsのソースコードをコンテナ内にマウント
+    command: ["npm", "run", "dev"] # 開発サーバーの起動コマンド
+    ports:
+      - "3000:3000" # 開発用ポート
     networks:
       - cms_network
 
