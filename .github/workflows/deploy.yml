@@ -26,6 +26,7 @@ jobs:
           run: |
             ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
 
+            sudo su -
             # ソースコードを置くディレクトリ
             DEPLOY_DIR=/root/develop/
 
