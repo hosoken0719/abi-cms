@@ -27,11 +27,9 @@ jobs:
             ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
 
             sudo su -
-            # ソースコードを置くディレクトリ
-            DEPLOY_DIR=/root/develop/
-
+                
             # 一時的なアップロード先を準備
-            cd DEPLOY_DIR
+            cd /root/develop/
             git pull
 
             EOF
