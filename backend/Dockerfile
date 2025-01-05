@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
 # Composerのインストール
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./src/composer.json ./src/composer.lock ./
+COPY ./src/.env /var/www/html/.env
 RUN composer install
 
 # Apacheの設定
