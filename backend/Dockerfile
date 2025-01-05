@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY ./src/composer.json ./src/composer.lock ./
 COPY ./src/.env /var/www/html/.env
-RUN composer install
+# RUN composer install
 
 # Apacheの設定
 COPY ./abi-cms.conf /etc/apache2/sites-available/
